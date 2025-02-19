@@ -2,23 +2,19 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function HomePage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const redirectToLogin = async () => {
-      try {
-        await router.push('/login');
-      } catch (error) {
-        console.error('Navigation error:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    const timer = setTimeout(() => {
+      router.push('/login');
+      setIsLoading(false);
+    }, 1000);
 
-    redirectToLogin();
+    return () => clearTimeout(timer);
   }, [router]);
 
   return (
@@ -31,7 +27,15 @@ export default function HomePage() {
             <p className="text-gray-600">Loading...</p>
           </div>
         ) : (
-          <p className="text-gray-600">Redirecting to login...</p>
+          <div className="space-y-2">
+            <p className="text-gray-600">Redirecting to login...</p>
+            <p className="text-sm text-gray-500">
+              If you are not redirected,{' '}
+              <Link href="/login" className="text-blue-500 hover:underline">
+                click here
+              </Link>
+            </p>
+          </div>
         )}
       </div>
     </div>
