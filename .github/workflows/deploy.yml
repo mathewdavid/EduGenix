@@ -8,6 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: Production
     steps:
       - uses: actions/checkout@v2
       
@@ -28,6 +29,7 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.ORG_ID }}
           vercel-project-id: ${{ secrets.PROJECT_ID }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           vercel-args: '--prod'
           working-directory: ./
           alias-domains: |
